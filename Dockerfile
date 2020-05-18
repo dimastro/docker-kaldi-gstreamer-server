@@ -66,15 +66,15 @@ RUN git clone https://github.com/kaldi-asr/kaldi && \
     cd /opt/gst-kaldi-nnet2-online/src && \
     sed -i '/KALDI_ROOT?=\/home\/tanel\/tools\/kaldi-trunk/c\KALDI_ROOT?=\/opt\/kaldi' Makefile && \
     make depend -j $(nproc) && make -j $(nproc) && \
-    # rm -rf /opt/gst-kaldi-nnet2-online/.git/ && \
-    # find /opt/gst-kaldi-nnet2-online/src/ -type f -not -name '*.so' -delete && \
-    # rm -rf /opt/kaldi/.git && \
-    # rm -rf /opt/kaldi/egs/ /opt/kaldi/windows/ /opt/kaldi/misc/ && \
-    # find /opt/kaldi/src/ -type f -not -name '*.so' -delete && \
-    # find /opt/kaldi/tools/ -type f \( -not -name '*.so' -and -not -name '*.so*' \) -delete && \
+    rm -rf /opt/gst-kaldi-nnet2-online/.git/ && \
+    find /opt/gst-kaldi-nnet2-online/src/ -type f -not -name '*.so' -delete && \
+    rm -rf /opt/kaldi/.git && \
+    rm -rf /opt/kaldi/egs/ /opt/kaldi/windows/ /opt/kaldi/misc/ && \
+    find /opt/kaldi/src/ -type f -not -name '*.so' -delete && \
+    find /opt/kaldi/tools/ -type f \( -not -name '*.so' -and -not -name '*.so*' \) -delete && \
     cd /opt && git clone https://github.com/dimastro/kaldi-gstreamer-server.git && \
-    # rm -rf /opt/kaldi-gstreamer-server/.git/ && \
-    # rm -rf /opt/kaldi-gstreamer-server/test/
+    rm -rf /opt/kaldi-gstreamer-server/.git/ && \
+    rm -rf /opt/kaldi-gstreamer-server/test/
 
 COPY start.sh stop.sh /opt/
 
