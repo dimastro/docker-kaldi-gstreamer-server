@@ -4,7 +4,7 @@ Dockerfile for [kaldi-gstreamer-server](https://github.com/dimastro/kaldi-gstrea
 Synopsis
 --------
 
-This dockerfile automatically builds master and worker servers that are explained at [Full-duplex Speech-to-text System for Estonian](http://ebooks.iospress.nl/volumearticle/37996) from Tanel Alumäe and implemented by himself at https://github.com/dimastro/kaldi-gstreamer-server.
+This dockerfile automatically builds master and worker servers that are explained at [Full-duplex Speech-to-text System for Estonian](http://ebooks.iospress.nl/volumearticle/37996) from Tanel Alumäe and implemented by himself at https://github.com/alumae/kaldi-gstreamer-server.
 
 Using this project you will be able to run an automatic speech recognition (ASR) server in a few minutes.
 
@@ -30,6 +30,8 @@ Get the image
 * Build your own image (requires git):
 
 `docker build -t kaldi-gstreamer-server:1.0 https://github.com/dimastro/docker-kaldi-gstreamer-server.git`
+
+In the next sections I'll assume you pulled the image from Docker Hub. If you have built your own image, simply change *dimastro/docker-kaldi-gstreamer-server:latest* by your image name when appropriate.
 
 
 How to use
@@ -174,6 +176,6 @@ mr coulter is the apostle of the middle classes and we're glad to welcome his go
 Credits
 --------
 * [kaldi](http://www.kaldi.org)
-* [gst-kaldi-nnet2-online](https://github.com/dimastro/gst-kaldi-nnet2-online)
-* [kaldi-gstreamer-server](https://github.com/dimastro/kaldi-gstreamer-server)
+* [gst-kaldi-nnet2-online](https://github.com/alumae/gst-kaldi-nnet2-online)
+* [kaldi-gstreamer-server](https://github.com/alumae/kaldi-gstreamer-server)
 * [Kõnele](http://kaljurand.github.io/K6nele/)
