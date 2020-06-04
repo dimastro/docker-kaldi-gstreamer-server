@@ -1,10 +1,10 @@
 # docker-kaldi-gstreamer-server
-Dockerfile for [kaldi-gstreamer-server](https://github.com/alumae/kaldi-gstreamer-server).
+Dockerfile for [kaldi-gstreamer-server](https://github.com/dimastro/kaldi-gstreamer-server).
 
 Synopsis
 --------
 
-This dockerfile automatically builds master and worker servers that are explained at [Full-duplex Speech-to-text System for Estonian](http://ebooks.iospress.nl/volumearticle/37996) from Tanel Alumäe and implemented by himself at https://github.com/alumae/kaldi-gstreamer-server.
+This dockerfile automatically builds master and worker servers that are explained at [Full-duplex Speech-to-text System for Estonian](http://ebooks.iospress.nl/volumearticle/37996) from Tanel Alumäe and implemented by himself at https://github.com/dimastro/kaldi-gstreamer-server.
 
 Using this project you will be able to run an automatic speech recognition (ASR) server in a few minutes.
 
@@ -13,7 +13,7 @@ Attention
 
 The ASR server that will be set up here requires some [kaldi models](http://www.kaldi.org). In the docker image I will detail below, there are no kaldi models included.
 
-You must have these models on your machine. You must also have an yaml file describing these models. Please, check some examples [here](https://github.com/alumae/kaldi-gstreamer-server/blob/master/sample_worker.yaml), [here](https://github.com/alumae/kaldi-gstreamer-server/blob/master/estonian_worker.yaml) and [here](https://github.com/alumae/kaldi-gstreamer-server/blob/master/sample_english_nnet2.yaml) to find out how to write your own yaml files.
+You must have these models on your machine. You must also have an yaml file describing these models. Please, check some examples [here](https://github.com/dimastro/kaldi-gstreamer-server/blob/master/sample_worker.yaml), [here](https://github.com/dimastro/kaldi-gstreamer-server/blob/master/estonian_worker.yaml) and [here](https://github.com/dimastro/kaldi-gstreamer-server/blob/master/sample_english_nnet2.yaml) to find out how to write your own yaml files.
 
 There are some kaldi models available for download. I have tested my setup with this [one](https://phon.ioc.ee/~tanela/tedlium_nnet_ms_sp_online.tgz), which is for English. I'm trying to build a model for Brazilian Portuguese, but until now I didn't find enough free/open resources.
 
@@ -27,15 +27,9 @@ Please, refer to https://docs.docker.com/engine/installation/.
 Get the image
 -------------
 
-* Pull the image from Docker Hub (~ 900MB):
+* Build your own image (requires git):
 
-`docker pull jcsilva/docker-kaldi-gstreamer-server`
-
-* Or you may build your own image (requires git):
-
-`docker build -t kaldi-gstreamer-server:1.0 https://github.com/jcsilva/docker-kaldi-gstreamer-server.git`
-
-In the next sections I'll assume you pulled the image from Docker Hub. If you have built your own image, simply change *jcsilva/docker-kaldi-gstreamer-server:latest* by your image name when appropriate.
+`docker build -t kaldi-gstreamer-server:1.0 https://github.com/dimastro/docker-kaldi-gstreamer-server.git`
 
 
 How to use
@@ -48,7 +42,7 @@ It's possible to use the same docker in two scenarios. You may create the master
 Assuming that your kaldi models are located at /media/kaldi_models on your host machine, create a container:
 
 ```
-docker run -it -p 8080:80 -v /media/kaldi_models:/opt/models jcsilva/docker-kaldi-gstreamer-server:latest /bin/bash
+docker run -it -p 8080:80 -v /media/kaldi_models:/opt/models dimastro/docker-kaldi-gstreamer-server:latest /bin/bash
 ```
 
 And, inside the container, start the service:
@@ -69,7 +63,7 @@ For stopping the servers, you may execute the following command inside your cont
 Assuming that your kaldi models are located at /media/kaldi_models on your host machine, create a container:
 
 ```
-docker run -it -v /media/kaldi_models:/opt/models jcsilva/docker-kaldi-gstreamer-server:latest /bin/bash
+docker run -it -v /media/kaldi_models:/opt/models dimastro/docker-kaldi-gstreamer-server:latest /bin/bash
 ```
 
 And, inside the container, start the service:
@@ -100,7 +94,7 @@ First of all, please, check if your setup is ok. It can be done using your brows
 
 After checking the setup, you should test your speech recognition service. For this, there are several options, and the following list gives some ideas:
 
-1. You can download [this client](https://github.com/alumae/kaldi-gstreamer-server/blob/master/kaldigstserver/client.py) for your host machine and execute it. When the master is on the local host, port 8080 and you have a wav file sampled at 16 kHz located at /home/localhost/audio/, you can type: ```python client.py -u ws://localhost:8080/client/ws/speech -r 32000 /home/localhost/audio/sample16k.wav```
+1. You can download [this client](https://github.com/dimastro/kaldi-gstreamer-server/blob/master/kaldigstserver/client.py) for your host machine and execute it. When the master is on the local host, port 8080 and you have a wav file sampled at 16 kHz located at /home/localhost/audio/, you can type: ```python client.py -u ws://localhost:8080/client/ws/speech -r 32000 /home/localhost/audio/sample16k.wav```
 
 2. You can use [Kõnele](http://kaljurand.github.io/K6nele/) for testing the service. It is an Android app that is freely available for downloading at Google Play. You must configure it to use your ASR service. Below you'll find some screenshots that may help you in this configuration. First, you should click on **Kõnele (fast recognition)**. Then, change the **WebSocket URL**. In my case, I connected to a master server located at ws://192.168.1.10:8080/client/ws/speech. After that, open a **notepad-like** application and change your input method to **Kõnele speech keyboard** and you'll see a **yellow button** instead of your traditional keyboard. Press this button and enjoy!
 
@@ -137,7 +131,7 @@ tar -zxvf tedlium_nnet_ms_sp_online.tgz
 
 2) Copy an example yaml file to /media/kaldi_models:
 ```
-wget https://raw.githubusercontent.com/alumae/kaldi-gstreamer-server/master/sample_english_nnet2.yaml -P /media/kaldi_models
+wget https://raw.githubusercontent.com/dimastro/kaldi-gstreamer-server/master/sample_english_nnet2.yaml -P /media/kaldi_models
 ```
 
 3) Update file contents:
@@ -148,7 +142,7 @@ sed -i 's:full-post-processor:#full-post-processor:g' /media/kaldi_models/sample
 
 4) Instantiate master and worker on the same machine:
 ```
-docker run -it -p 8080:80 -v /media/kaldi_models:/opt/models jcsilva/docker-kaldi-gstreamer-server:latest /bin/bash
+docker run -it -p 8080:80 -v /media/kaldi_models:/opt/models dimastro/docker-kaldi-gstreamer-server:latest /bin/bash
 ```
 
 5) Inside the docker container, start the service:
@@ -158,9 +152,9 @@ docker run -it -p 8080:80 -v /media/kaldi_models:/opt/models jcsilva/docker-kald
 
 6) On your host machine, download a client example and test your setup with a given audio:
 ```
-wget https://raw.githubusercontent.com/alumae/kaldi-gstreamer-server/master/kaldigstserver/client.py -P /tmp
-wget https://raw.githubusercontent.com/jcsilva/docker-kaldi-gstreamer-server/master/audio/1272-128104-0000.wav -P /tmp
-wget https://raw.githubusercontent.com/alumae/kaldi-gstreamer-server/master/test/data/bill_gates-TED.mp3 -P /tmp
+wget https://raw.githubusercontent.com/dimastro/kaldi-gstreamer-server/master/kaldigstserver/client.py -P /tmp
+wget https://raw.githubusercontent.com/dimastro/docker-kaldi-gstreamer-server/master/audio/1272-128104-0000.wav -P /tmp
+wget https://raw.githubusercontent.com/dimastro/kaldi-gstreamer-server/master/test/data/bill_gates-TED.mp3 -P /tmp
 python /tmp/client.py -u ws://localhost:8080/client/ws/speech -r 32000 /tmp/1272-128104-0000.wav
 python /tmp/client.py -u ws://localhost:8080/client/ws/speech -r 8192 /tmp/bill_gates-TED.mp3
 ```
@@ -180,6 +174,6 @@ mr coulter is the apostle of the middle classes and we're glad to welcome his go
 Credits
 --------
 * [kaldi](http://www.kaldi.org)
-* [gst-kaldi-nnet2-online](https://github.com/alumae/gst-kaldi-nnet2-online)
-* [kaldi-gstreamer-server](https://github.com/alumae/kaldi-gstreamer-server)
+* [gst-kaldi-nnet2-online](https://github.com/dimastro/gst-kaldi-nnet2-online)
+* [kaldi-gstreamer-server](https://github.com/dimastro/kaldi-gstreamer-server)
 * [Kõnele](http://kaljurand.github.io/K6nele/)
