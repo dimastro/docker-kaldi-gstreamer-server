@@ -35,6 +35,7 @@ RUN apt-get update && apt-get install -y  \
     build-essential \
     python-dev \
     sox \
+    gfortran \
     zlib1g-dev && \
     apt-get clean autoclean && \
     apt-get autoremove -y && \
