@@ -40,7 +40,8 @@ RUN apt-get update && apt-get install -y  \
     apt-get clean autoclean && \
     apt-get autoremove -y && \
     pip install ws4py==0.3.2 && \
-    pip install tornado==4.5.3  && \    
+    pip install tornado==4.5.3 && \    
+    pip install futures==3.3.0 && \    
     ln -s /usr/bin/python2.7 /usr/bin/python ; ln -s -f bash /bin/sh
 
 WORKDIR /opt
