@@ -2,6 +2,7 @@ FROM debian:9
 MAINTAINER Eduardo Silva <zedudu@gmail.com>
 
 RUN apt-get update && apt-get install -y  \
+    tmux \
     procps \
     autoconf \
     automake \
@@ -14,6 +15,7 @@ RUN apt-get update && apt-get install -y  \
     gstreamer1.0-plugins-bad \
     gstreamer1.0-plugins-base \
     gstreamer1.0-plugins-ugly  \
+    libgstreamer-plugins-base1.0-dev \
     libatlas3-base \
     libgstreamer1.0-dev \
     libtool-bin \
@@ -24,17 +26,19 @@ RUN apt-get update && apt-get install -y  \
     python-yaml \
     python-simplejson \
     python-gi \
+    python-dev \
     subversion \
     unzip \
     wget \
     build-essential \
-    python-dev \
     sox \
+    gfortran \
     zlib1g-dev && \
     apt-get clean autoclean && \
     apt-get autoremove -y && \
     pip install ws4py==0.3.2 && \
     pip install tornado && \    
+    pip install futures==3.3.0 && \
     ln -s /usr/bin/python2.7 /usr/bin/python ; ln -s -f bash /bin/sh
 
 WORKDIR /opt
