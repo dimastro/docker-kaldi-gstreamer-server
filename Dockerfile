@@ -43,6 +43,14 @@ RUN apt-get update && apt-get install -y  \
 
 WORKDIR /opt
 
+RUN wget -nv -T 10 -t 3 -O sph2pipe-2.5.tar.gz \
+    https://github.com/burrmill/sph2pipe/archive/2.5.tar.gz && \
+    rm -rf sph2pipe_v* && \
+    tar -xmzf sph2pipe-2.5.tar.gz && \
+    mv sph2pipe-2.5 sph2pipe_v2.5 && \
+    make -C sph2pipe_v2.5 && \
+    cc -o sph2pipe -s -O2 -Wno-implicit-function-declaration -Wno-implicit-int -Wno-write-strings file_headers.c shorten_x.c sph2pipe.c -lm
+
 RUN wget http://www.digip.org/jansson/releases/jansson-2.7.tar.bz2 && \
     bunzip2 -c jansson-2.7.tar.bz2 | tar xf -  && \
     cd jansson-2.7 && \
