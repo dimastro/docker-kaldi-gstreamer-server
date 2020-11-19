@@ -48,7 +48,7 @@ RUN wget -nv -T 10 -t 3 -O sph2pipe-2.5.tar.gz \
 RUN rm -rf sph2pipe_v*
 RUN tar -xmzf sph2pipe-2.5.tar.gz
 RUN mv sph2pipe-2.5 sph2pipe_v2.5
-RUN sed -i 's/CCFLAGS += /CCFLAGS += -lm /' Makefile
+RUN sed -i 's/CCFLAGS += /CCFLAGS += -lm /' sph2pipe_v2.5/Makefile
 RUN make -C sph2pipe_v2.5
 
 RUN wget http://www.digip.org/jansson/releases/jansson-2.7.tar.bz2 && \
