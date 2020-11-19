@@ -49,7 +49,7 @@ RUN rm -rf sph2pipe_v*
 RUN tar -xmzf sph2pipe-2.5.tar.gz
 RUN mv sph2pipe-2.5 sph2pipe_v2.5
 RUN make -C sph2pipe_v2.5
-RUN cc -o sph2pipe -lm -s -O2 -Wno-implicit-function-declaration -Wno-implicit-int -Wno-write-strings file_headers.c shorten_x.c sph2pipe.c
+RUN cc -o sph2pipe
 
 RUN wget http://www.digip.org/jansson/releases/jansson-2.7.tar.bz2 && \
     bunzip2 -c jansson-2.7.tar.bz2 | tar xf -  && \
