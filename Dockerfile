@@ -43,14 +43,6 @@ RUN apt-get update && apt-get install -y  \
 
 WORKDIR /opt
 
-RUN wget -nv -T 10 -t 3 -O sph2pipe-2.5.tar.gz \
-    https://github.com/burrmill/sph2pipe/archive/2.5.tar.gz
-RUN rm -rf sph2pipe_v*
-RUN tar -xmzf sph2pipe-2.5.tar.gz
-RUN mv sph2pipe-2.5 sph2pipe_v2.5
-RUN sed -i 's/CCFLAGS += /CCFLAGS += -lm /' sph2pipe_v2.5/Makefile
-RUN make -C sph2pipe_v2.5
-
 RUN wget http://www.digip.org/jansson/releases/jansson-2.7.tar.bz2 && \
     bunzip2 -c jansson-2.7.tar.bz2 | tar xf -  && \
     cd jansson-2.7 && \
@@ -60,6 +52,7 @@ RUN wget http://www.digip.org/jansson/releases/jansson-2.7.tar.bz2 && \
 
 RUN git clone https://github.com/kaldi-asr/kaldi && \
     cd /opt/kaldi/tools && \
+    sed -i "/mv sph2pipe/a \\\tsed -i 's/CCFLAGS \+= /CCFLAGS += -lm /' sph2pipe_v\$(SPH2PIPE_VERSION)/Makefile" Makefile && \
     make -j $(nproc) && \
     ./install_portaudio.sh && \
     /opt/kaldi/tools/extras/install_mkl.sh && \
