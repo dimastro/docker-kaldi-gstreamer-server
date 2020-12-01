@@ -23,10 +23,11 @@ RUN apt-get update && apt-get install -y  \
     python2.7 \
     python3 \
     python-pip \
-    python-yaml \
-    python-simplejson \
-    python-gi \
-    python-dev \
+    python3-pip \
+    python3-yaml \
+    python3-simplejson \
+    python3-gi \
+    python3-dev \
     subversion \
     unzip \
     wget \
@@ -75,6 +76,7 @@ RUN git clone https://github.com/kaldi-asr/kaldi && \
     cd /opt && git clone https://github.com/alumae/kaldi-gstreamer-server.git && \
     cd /opt/kaldi-gstreamer-server && \
     git checkout py3 && \
+    sed -i "s/\.replace('\\\'', '\\\[\"]')//g" kaldigstserver/master_server.py
     rm -rf /opt/kaldi-gstreamer-server/.git/ && \
     rm -rf /opt/kaldi-gstreamer-server/test/
 

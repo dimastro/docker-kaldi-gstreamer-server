@@ -20,6 +20,8 @@ while getopts "h?m:p:y:" opt; do
     p)  PORT=$OPTARG
         ;;
     y)  YAML=$OPTARG
+	;;
+    w)  NWORKERS=$OPTARG
         ;;
     esac
 done
@@ -33,10 +35,13 @@ fi;
 
 if [ "$MASTER" == "localhost" ] ; then
   # start a local master
-  python /opt/kaldi-gstreamer-server/kaldigstserver/master_server.py --port=$PORT 2>> /opt/master.log &
+  python3 /opt/kaldi-gstreamer-server/kaldigstserver/master_server.py --port=$PORT 2>> /opt/master.log &
 fi
 
 #start worker and connect it to the master
 export GST_PLUGIN_PATH=/opt/gst-kaldi-nnet2-online/src/:/opt/kaldi/src/gst-plugin/
 
-python /opt/kaldi-gstreamer-server/kaldigstserver/worker.py -c $YAML -u ws://$MASTER:$PORT/worker/ws/speech 2>> /opt/worker.log &
+for i in $(seq 1 $NWORKERS)
+do
+    python3 /tools/kaldi-batch-server/src/worker.py -c $YAML -u ws://$MASTER:$PORT/worker/ws/speech 2>> worker${i}.log &
+done
