@@ -76,7 +76,7 @@ RUN git clone https://github.com/kaldi-asr/kaldi && \
     cd /opt && git clone https://github.com/alumae/kaldi-gstreamer-server.git && \
     cd /opt/kaldi-gstreamer-server && \
     git checkout py3 && \
-    sed -i "s/\.replace('\\\'', '\\\[\"]')//g" kaldigstserver/master_server.py
+    sed -i "s/\.replace('\\\'', '\\\[\"]')//g" kaldigstserver/master_server.py && \
     rm -rf /opt/kaldi-gstreamer-server/.git/ && \
     rm -rf /opt/kaldi-gstreamer-server/test/
 
