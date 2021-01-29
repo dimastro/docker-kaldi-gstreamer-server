@@ -38,7 +38,7 @@ RUN apt-get update && apt-get install -y  \
     apt-get clean autoclean && \
     apt-get autoremove -y && \
     pip install ws4py==0.3.2 && \
-    pip install tornado && \    
+    pip3 install tornado && \    
     pip install futures==3.3.0 && \
     ln -s /usr/bin/python2.7 /usr/bin/python ; ln -s -f bash /bin/sh
 
@@ -78,7 +78,8 @@ RUN git clone https://github.com/kaldi-asr/kaldi && \
     git checkout py3 && \
     sed -i "s/\.replace('\\\'', '\\\[\"]')//g" kaldigstserver/master_server.py && \
     rm -rf /opt/kaldi-gstreamer-server/.git/ && \
-    rm -rf /opt/kaldi-gstreamer-server/test/
+    rm -rf /opt/kaldi-gstreamer-server/test/ && \
+    export LD_PRELOAD=/opt/intel/mkl/lib/intel64/libmkl_def.so:/opt/intel/mkl/lib/intel64/libmkl_avx2.so:/opt/intel/mkl/lib/intel64/libmkl_core.so:/opt/intel/mkl/lib/intel64/libmkl_intel_lp64.so:/opt/intel/mkl/lib/intel64/libmkl_intel_thread.so:/opt/intel/lib/intel64_lin/libiomp5.so
 
 COPY start.sh stop.sh /opt/
 

@@ -43,5 +43,5 @@ export GST_PLUGIN_PATH=/opt/gst-kaldi-nnet2-online/src/:/opt/kaldi/src/gst-plugi
 
 for i in $(seq 1 $NWORKERS)
 do
-    python3 /tools/kaldi-batch-server/src/worker.py -c $YAML -u ws://$MASTER:$PORT/worker/ws/speech 2>> worker${i}.log &
+    python3 /opt/kaldi-gstreamer-server/kaldigstserver/worker.py -c $YAML -u ws://$MASTER:$PORT/worker/ws/speech 2>> worker${i}.log &
 done
