@@ -34,6 +34,7 @@ RUN apt-get update && apt-get install -y  \
     build-essential \
     sox \
     gfortran \
+    vim-gtk3 \
     zlib1g-dev && \
     apt-get clean autoclean && \
     apt-get autoremove -y && \
