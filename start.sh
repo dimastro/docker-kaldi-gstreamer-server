@@ -2,6 +2,7 @@
 
 MASTER="localhost"
 PORT=80
+NWORKERS=1
 
 usage(){
   echo "Creates a worker and connects it to a master.";
@@ -9,7 +10,7 @@ usage(){
   echo "Usage: $0 -y yaml_file [-m master address] [-p port number]";
 }
 
-while getopts "h?m:p:y:" opt; do
+while getopts "h?m:p:y:w:" opt; do
     case "$opt" in
     h|\?)
         usage
